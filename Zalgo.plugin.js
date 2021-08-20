@@ -26,6 +26,9 @@
     }
     WScript.Quit();
 @else@*/
+
+    
+            
 var Zalgo = (() => {
 //module.exports = (() => {
     const config = {
@@ -38,25 +41,18 @@ var Zalgo = (() => {
                     "github_username":"lol219"
                 }
             ],
-            "version":"0.1.6",
+            "version":"0.1.9",
             "description":
             "A plugin that makes your text to zalgo if you used this : {{0.01:text_goes_here}} (you can change 0:01 to another thing)",
             "github":"https://github.com/lol219/Zalgo",
             "github_raw":"https://raw.githubusercontent.com/lol219/Zalgo/main/Zalgo.plugin.js"
         },
         "changelog":[
-            {
-                "title": 'fixed',
-                "type": 'Fixed :',
-                "items": [
-                "**Discord Crash**: Fixed the discord crash when someone is typing",
-                "**Performance**:Now the plugin will work with Last version of Better Discord",
-                "**Settings** : Fixed the error when someone try to open plugin settings (Error detected on Inspect element console)"
+            {"title": "Linked", "items": ["Zalgo is linked with AlexLib , you will get a popup to download it , if you skip the popup you won't get it again and you will need to download manually here (https://github.com/lol219/AlexLib/blob/main/AlexLib.plugin.js)"]},
 
-                
-                
-                ]
-            }
+            {"title": "On-going", "type": "progress", "items": [
+            "**Threads**: Making it support threads too"]}
+            
             
         ],   
         
@@ -67,7 +63,7 @@ var Zalgo = (() => {
     class Zalgo{
     getName() {return "Zalgo";}
     getDescription() {return "A plugin that makes your text to zalgo if you used this : {{0.01:text_goes_here}} (you can change 0:01 to another thing)";}
-    getVersion() {return "0.1.6";}
+    getVersion() {return "0.1.9";}
     getAuthor() {return "Alexandro";}
 
     start() {
@@ -80,6 +76,7 @@ var Zalgo = (() => {
 
     }
 }
+
 //var Zalgo = (() => {
     //const config = {"info":{"name":"Zalgo","authors":[{"name":"Chami","discord_id":"165709167095578625","github_username":"planetarian","twitter_username":"pir0zhki"}],"version":"0.4.0","description":"Zalgo text generation plugin -- write something {{like this}} to corrupt it l̕i̸̶͜ḱ͟e͏̶͢ ̨̛t̢̛҉̧ḩ͘i͘̕͏́͟ş̸̢͘͏\r\nYou can configure the amount of corruption in settings, or prefix it with a corruption amount:\r\n{{0.01:just a little corrupt}} -> j̨ųs͏t̨ ̷a͘ ̸l̶i̷t̀t҉l͡e҉ ̴c̡o͏r҉ŕu̡p̢t̕\r\nYou can also ramp the corruption amount gradually:\r\n{{r:start at zero and get more corrupted}} -> st̶a̷r̸t͜ ҉a̴t̡ ͘z̢e̵r̵o͡ ͝a̡ńd̡ ̛g͝e͞t͏̷ ͜m͟ó̡r̕͠e̸̴ ҉̨͟c̨̀͢͠ơ̕̕͝͞r̸̵̡͢ŕ̛͞u̧p̨͟͝t̴̶͝e̷̡d͏̴́͡","github":"https://github.com/planetarian/BetterDiscordPlugins","github_raw":"https://raw.githubusercontent.com/planetarian/BetterDiscordPlugins/master/Zalgo.plugin.js"},"changelog":[{"title":"0.4.0","items":["Fixed breakage caused by discord update","Switched from element manipulation to method patching"]},{"title":"0.3.0","items":["Fixed breakage caused by discord update","Switched from locally-tracked classes to use DiscordSelectors"]},{"title":"Plugin revamp","items":["Switched to new plugin format","Switched to new ZeresLib"]}],"main":"index.js"};
 
@@ -103,11 +100,38 @@ var Zalgo = (() => {
         }
         start() {}
         stop() {}
+
+            
     } : (([Plugin, Api]) => {
         const plugin = (Plugin, Library) => {
 
     const { Logger, DiscordModules, Patcher, Settings } = Library;
+    if(!BdApi.Plugins.get("AlexLib") && !BdApi.getData(config.info.name, "didShowIssueHelperPopup")){
+                BdApi.saveData(config.info.name, "didShowIssueHelperPopup", true);
+                BdApi.showConfirmationModal("Missing Library", 
+                    [`Do you want to download a Alexandro plugin library ? it needs it `],
+                    {
+                        confirmText: "Download",
+                        cancelText: "Cancel",
+                        onConfirm: () => {
+                            require("request").get("https://raw.githubusercontent.com/l0c4lh057/BetterDiscordStuff/master/Plugins/BugReportHelper/BugReportHelper.plugin.js", (error, response, body) => {
+                                if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/l0c4lh057/BetterDiscordStuff/master/Plugins/BugReportHelper/BugReportHelper.plugin.js");
+                                else require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "BugReportHelper.plugin.js"), body, ()=>{
+                                    window.setTimeout(()=>BdApi.Plugins.enable("BugReportHelper"), 1000);
+                                });
+                            });
+                        }
+                    }
+                );
+            }
 
+
+
+            
+            //const lib_present = !!BdApi.Plugins.get("AlexLib")
+            
+        
+       
     return class Zalgo extends Plugin {
         constructor() {
             super();
@@ -156,6 +180,7 @@ var Zalgo = (() => {
                 corruptDown: false
             };
         }
+
 
         onStart() {
             Logger.log("Started");
