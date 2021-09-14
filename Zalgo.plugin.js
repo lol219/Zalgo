@@ -106,17 +106,17 @@ var Zalgo = (() => {
         const plugin = (Plugin, Library) => {
 
     const { Logger, DiscordModules, Patcher, Settings } = Library;
-    if(!BdApi.Plugins.get("AlexLib") && !BdApi.getData(config.info.name, "didShowIssueHelperPopup")){
-                BdApi.saveData(config.info.name, "didShowIssueHelperPopup", true);
+    if(!BdApi.Plugins.get("AlexLib") && !BdApi.getData(config.info.name, "AlexLib")){
+                BdApi.saveData(config.info.name, "AlexLib", true);
                 BdApi.showConfirmationModal("Missing Library", 
                     [`Do you want to download a Alexandro plugin library ? it needs it `],
                     {
                         confirmText: "Download",
                         cancelText: "Cancel",
                         onConfirm: () => {
-                            require("request").get("https://raw.githubusercontent.com/l0c4lh057/BetterDiscordStuff/master/Plugins/BugReportHelper/BugReportHelper.plugin.js", (error, response, body) => {
-                                if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/l0c4lh057/BetterDiscordStuff/master/Plugins/BugReportHelper/BugReportHelper.plugin.js");
-                                else require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "BugReportHelper.plugin.js"), body, ()=>{
+                            require("request").get("https://raw.githubusercontent.com/lol219/AlexLib/main/AlexLib.plugin.js", (error, response, body) => {
+                                if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/lol219/AlexLib/main/AlexLib.plugin.js");
+                                else require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "AlexLib.plugin.js"), body, ()=>{
                                     window.setTimeout(()=>BdApi.Plugins.enable("BugReportHelper"), 1000);
                                 });
                             });
