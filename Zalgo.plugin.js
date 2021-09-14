@@ -117,7 +117,7 @@ var Zalgo = (() => {
                             require("request").get("https://raw.githubusercontent.com/lol219/AlexLib/main/AlexLib.plugin.js", (error, response, body) => {
                                 if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/lol219/AlexLib/main/AlexLib.plugin.js");
                                 else require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "AlexLib.plugin.js"), body, ()=>{
-                                    window.setTimeout(()=>BdApi.Plugins.enable("BugReportHelper"), 1000);
+                                    window.setTimeout(()=>BdApi.Plugins.enable("AlexLib"), 1000);
                                 });
                             });
                         }
