@@ -41,14 +41,14 @@ var Zalgo = (() => {
                     "github_username":"lol219"
                 }
             ],
-            "version":"0.1.9",
+            "version":"0.2.0",
             "description":
             "A plugin that makes your text to zalgo if you used this : {{0.01:text_goes_here}} (you can change 0:01 to another thing)",
             "github":"https://github.com/lol219/Zalgo",
             "github_raw":"https://raw.githubusercontent.com/lol219/Zalgo/main/Zalgo.plugin.js"
         },
         "changelog":[
-            {"title": "Linked", "items": ["Zalgo is linked with AlexLib , you will get a popup to download it , if you skip the popup you won't get it again and you will need to download manually here (https://github.com/lol219/AlexLib/blob/main/AlexLib.plugin.js)"]},
+            {"title": "Added", "items": ["Code Cleanup and patched some issues after the last discord update"]},
 
             {"title": "On-going", "type": "progress", "items": [
             "**Threads**: Making it support threads too"]}
@@ -63,7 +63,7 @@ var Zalgo = (() => {
     class Zalgo{
     getName() {return "Zalgo";}
     getDescription() {return "A plugin that makes your text to zalgo if you used this : {{0.01:text_goes_here}} (you can change 0:01 to another thing)";}
-    getVersion() {return "0.1.9";}
+    getVersion() {return "0.2.0";}
     getAuthor() {return "Alexandro";}
 
     start() {
@@ -106,8 +106,8 @@ var Zalgo = (() => {
         const plugin = (Plugin, Library) => {
 
     const { Logger, DiscordModules, Patcher, Settings } = Library;
-    if(!BdApi.Plugins.get("AlexLib") && !BdApi.getData(config.info.name, "AlexLib")){
-                BdApi.saveData(config.info.name, "AlexLib", true);
+    if(!BdApi.Plugins.get("AlexLib") && !BdApi.getData(config.info.name)){
+                BdApi.saveData(config.info.name);
                 BdApi.showConfirmationModal("Missing Library", 
                     [`Do you want to download a Alexandro plugin library ? it needs it `],
                     {
@@ -128,7 +128,7 @@ var Zalgo = (() => {
 
 
             
-            //const lib_present = !!BdApi.Plugins.get("AlexLib")
+         
             
         
        
